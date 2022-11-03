@@ -1,0 +1,43 @@
+﻿@page "/doctorprescriptions"
+@inject IController controller
+@inject IModel model
+@using ZsutPwPatterns.Application.Model.Data
+@using System.Text
+@using System.Linq
+<h5>Search for prescriptions doctor wrote</h5>
+<style>
+    body {
+        background-color: lightsteelblue;
+    }
+</style>
+
+
+
+<RadzenTextBox Name="ShowDoctorPrescriptions" @bind-Value=@model.SearchPrescriptionDoctorId Style="width: 160px" />
+
+<RadzenButton Icon="search" Text="Search" Click=@controller.ShowPrescriptionListAsync ButtonStyle="ButtonStyle.Secondary " Style="width: 160px" />
+
+<h5 style="margin-top: 16px">Doctor prescriptions:</h5>
+
+<RadzenListBox Name="selectionList" Data=@model.PrescriptionList TValue="PrescriptionData" Style="width: 324px; height: 240px">
+    <Template Context="PrescriptionData">
+        Doctor @PrescriptionData.doctorName @PrescriptionData.doctorSurname wrote prescription at @PrescriptionData.dateOfIssue that last to @PrescriptionData.expirationDate for @PrescriptionData.patientName @PrescriptionData.patientSurname
+    </Template>
+</RadzenListBox>
+
+
+
+
+
+    @code {
+        private IController controller_ = ControllerFactory.GetController(new EventDispatcher());
+
+        protected override async Task OnInitializedAsync()
+        {
+            IModel model1 = controller_.Model;
+
+            IModel model2 = controller.Model;
+
+            IModel model3 = model;
+        }
+    }

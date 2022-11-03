@@ -1,0 +1,2 @@
+curl -X POST "https://localhost:44335/assign-prescription" -H "accept: */*"  -H "Content-Type: application/json"  -d "{\"dateOfIssue\": \"string\", "doctorName": \"string\", \"doctorSurname\": \"string\", \"drugs\": [ \"string\" ], \"expirationDate\": \"string\", \"patientName\": \"string\", \"patientSurname\": \"string\"}"
+pause

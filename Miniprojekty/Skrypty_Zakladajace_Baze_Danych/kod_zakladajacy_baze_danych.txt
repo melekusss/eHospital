@@ -1,0 +1,133 @@
+BEGIN TRANSACTION;
+GO
+
+CREATE TABLE [Doctor] (
+    [DoctorId] int NOT NULL IDENTITY,
+    [Name] nvarchar(max) NOT NULL,
+    [Surname] nvarchar(max) NOT NULL,
+    CONSTRAINT [PK_Doctor] PRIMARY KEY ([DoctorId])
+);
+GO
+
+CREATE TABLE [Drug] (
+    [DrugId] int NOT NULL IDENTITY,
+    [DrugName] nvarchar(max) NULL,
+    CONSTRAINT [PK_Drug] PRIMARY KEY ([DrugId])
+);
+GO
+
+CREATE TABLE [Patient] (
+    [PatientId] int NOT NULL IDENTITY,
+    [Name] nvarchar(max) NULL,
+	[Surname] nvarchar(max) NULL,
+    CONSTRAINT [PK_Patient] PRIMARY KEY ([PatientId])
+);
+GO
+
+CREATE TABLE [Prescription] (
+	[Id] int NOT NULL IDENTITY,
+    [DateOfIssue] nvarchar(max) NOT NULL,
+	DoctorId int FOREIGN KEY REFERENCES Doctor(DoctorId),
+    [ExpirationDate] nvarchar(max) NOT NULL,
+	PatientId int FOREIGN KEY REFERENCES Patient(PatientId),
+    CONSTRAINT [PK_Prescription] PRIMARY KEY ([Id])
+);
+GO
+
+
+
+CREATE TABLE [PrescriptionDrug] (
+    [DrugId] int NOT NULL,
+    [PrescriptionId] int NOT NULL,
+    CONSTRAINT [PK_PrescriptionDrug] PRIMARY KEY ([DrugId], [PrescriptionId]),
+    CONSTRAINT [FK_PrescriptionDrug_Drug_DrugId] FOREIGN KEY ([DrugId]) REFERENCES [Drug] ([DrugId]) ON DELETE CASCADE,
+    CONSTRAINT [FK_PrescriptionDrug_Prescription_PrescriptionId] FOREIGN KEY ([PrescriptionId]) REFERENCES [Prescription] ([Id]) ON DELETE CASCADE
+);
+GO
+
+CREATE INDEX [IX_PrescriptionDrug_PrescriptionId] ON [PrescriptionDrug] ([PrescriptionId]);
+GO
+
+
+COMMIT;
+GO
+
+
+
+
+INSERT INTO Doctor(Name, Surname) VALUES ('Jacek', 'Soplica')
+INSERT INTO Doctor(Name, Surname) VALUES ('Zbigniew', 'Sad')
+INSERT INTO Doctor(Name, Surname) VALUES ('Jan', 'Kowalski')
+INSERT INTO Doctor(Name, Surname) VALUES ('Tomasz', 'Warszawa')
+INSERT INTO Doctor(Name, Surname) VALUES ('Janusz', 'Nowka')
+INSERT INTO Doctor(Name, Surname) VALUES ('Grzegorz', 'Stonoga')
+INSERT INTO Doctor(Name, Surname) VALUES ('Michał', 'Las')
+
+INSERT INTO Patient(Name, Surname) VALUES ('Halina', 'Nowicka')
+INSERT INTO Patient(Name, Surname) VALUES ('Grażyna', 'Kowal')
+INSERT INTO Patient(Name, Surname) VALUES ('Elżbieta', 'Kowalska')
+INSERT INTO Patient(Name, Surname) VALUES ('Henryk', 'Kowalczyk')
+INSERT INTO Patient(Name, Surname) VALUES ('Jan', 'Zabrzewski')
+INSERT INTO Patient(Name, Surname) VALUES ('Marcin', 'Niemiec')
+INSERT INTO Patient(Name, Surname) VALUES ('Paweł', 'Polak')
+INSERT INTO Patient(Name, Surname) VALUES ('Marek', 'Małek')
+INSERT INTO Patient(Name, Surname) VALUES ('Adam', 'Jabłoński')
+
+INSERT INTO Drug(DrugName) VALUES ('Paracetamol')
+INSERT INTO Drug(DrugName) VALUES ('Ibuprofen')
+INSERT INTO Drug(DrugName) VALUES ('Metafen')
+INSERT INTO Drug(DrugName) VALUES ('Acenol')
+INSERT INTO Drug(DrugName) VALUES ('Pawulon')
+INSERT INTO Drug(DrugName) VALUES ('Ketoprofen')
+INSERT INTO Drug(DrugName) VALUES ('Nolicin')
+INSERT INTO Drug(DrugName) VALUES ('Artresan')
+
+INSERT INTO Prescription(DateOfIssue, DoctorId, ExpirationDate, PatientId) VALUES ('28.11.2009',1,'12.12.2008',1)
+INSERT INTO Prescription(DateOfIssue, DoctorId, ExpirationDate, PatientId) VALUES ('12.1.2011',1,'24.1.2011',2)
+INSERT INTO Prescription(DateOfIssue, DoctorId, ExpirationDate, PatientId) VALUES ('28.5.2012',2,'31.6.2012',3)
+INSERT INTO Prescription(DateOfIssue, DoctorId, ExpirationDate, PatientId) VALUES ('28.6.2020',3,'28.7.2020',4)
+INSERT INTO Prescription(DateOfIssue, DoctorId, ExpirationDate, PatientId) VALUES ('21.7.2020',4,'29.7.2020',5)
+INSERT INTO Prescription(DateOfIssue, DoctorId, ExpirationDate, PatientId) VALUES ('11.8.2020',4,'21.8.2020',6)
+INSERT INTO Prescription(DateOfIssue, DoctorId, ExpirationDate, PatientId) VALUES ('21.9.2020',2,'29.9.2020',7)
+INSERT INTO Prescription(DateOfIssue, DoctorId, ExpirationDate, PatientId) VALUES ('14.10.2020',3,'28.10.2020',8)
+INSERT INTO Prescription(DateOfIssue, DoctorId, ExpirationDate, PatientId) VALUES ('16.11.2020',5,'24.11.2020',9)
+INSERT INTO Prescription(DateOfIssue, DoctorId, ExpirationDate, PatientId) VALUES ('17.12.2020',6,'27.12.2020',1)
+INSERT INTO Prescription(DateOfIssue, DoctorId, ExpirationDate, PatientId) VALUES ('18.6.2020',5,'25.6.2020',2)
+INSERT INTO Prescription(DateOfIssue, DoctorId, ExpirationDate, PatientId) VALUES ('19.5.2020',7,'26.5.2020',3)
+INSERT INTO Prescription(DateOfIssue, DoctorId, ExpirationDate, PatientId) VALUES ('22.7.2020',7,'28.7.2020',4)
+INSERT INTO Prescription(DateOfIssue, DoctorId, ExpirationDate, PatientId) VALUES ('10.9.2020',5,'19.9.2020',5)
+
+
+
+INSERT INTO PrescriptionDrug(DrugId,PrescriptionId) VALUES (1,1)
+INSERT INTO PrescriptionDrug(DrugId,PrescriptionId) VALUES (1,2)
+INSERT INTO PrescriptionDrug(DrugId,PrescriptionId) VALUES (1,3)
+INSERT INTO PrescriptionDrug(DrugId,PrescriptionId) VALUES (1,6)
+INSERT INTO PrescriptionDrug(DrugId,PrescriptionId) VALUES (1,7)
+INSERT INTO PrescriptionDrug(DrugId,PrescriptionId) VALUES (2,4)
+INSERT INTO PrescriptionDrug(DrugId,PrescriptionId) VALUES (2,5)
+INSERT INTO PrescriptionDrug(DrugId,PrescriptionId) VALUES (2,8)
+INSERT INTO PrescriptionDrug(DrugId,PrescriptionId) VALUES (2,9)
+INSERT INTO PrescriptionDrug(DrugId,PrescriptionId) VALUES (2,14)
+INSERT INTO PrescriptionDrug(DrugId,PrescriptionId) VALUES (3,11)
+INSERT INTO PrescriptionDrug(DrugId,PrescriptionId) VALUES (3,12)
+INSERT INTO PrescriptionDrug(DrugId,PrescriptionId) VALUES (3,11)
+INSERT INTO PrescriptionDrug(DrugId,PrescriptionId) VALUES (3,10)
+INSERT INTO PrescriptionDrug(DrugId,PrescriptionId) VALUES (3,11)
+INSERT INTO PrescriptionDrug(DrugId,PrescriptionId) VALUES (3,14)
+INSERT INTO PrescriptionDrug(DrugId,PrescriptionId) VALUES (3,6)
+INSERT INTO PrescriptionDrug(DrugId,PrescriptionId) VALUES (4,11)
+INSERT INTO PrescriptionDrug(DrugId,PrescriptionId) VALUES (4,12)
+INSERT INTO PrescriptionDrug(DrugId,PrescriptionId) VALUES (4,14)
+INSERT INTO PrescriptionDrug(DrugId,PrescriptionId) VALUES (4,9)
+INSERT INTO PrescriptionDrug(DrugId,PrescriptionId) VALUES (4,3)
+INSERT INTO PrescriptionDrug(DrugId,PrescriptionId) VALUES (5,2)
+INSERT INTO PrescriptionDrug(DrugId,PrescriptionId) VALUES (5,5)
+INSERT INTO PrescriptionDrug(DrugId,PrescriptionId) VALUES (5,8)
+INSERT INTO PrescriptionDrug(DrugId,PrescriptionId) VALUES (6,10)
+INSERT INTO PrescriptionDrug(DrugId,PrescriptionId) VALUES (6,10)
+INSERT INTO PrescriptionDrug(DrugId,PrescriptionId) VALUES (7,12)
+INSERT INTO PrescriptionDrug(DrugId,PrescriptionId) VALUES (7,13)
+INSERT INTO PrescriptionDrug(DrugId,PrescriptionId) VALUES (8,1)
+
+

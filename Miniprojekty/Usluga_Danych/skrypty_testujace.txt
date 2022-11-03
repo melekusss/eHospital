@@ -1,0 +1,24 @@
+
+curl -X 'GET' \
+  'https://localhost:44303/prescriptions-by-doctor-id?doctorId=1' \
+  -H 'accept: text/plain'
+
+curl -X 'GET' \
+  'https://localhost:44303/prescriptions-by-patient-id?patientId=1' \
+  -H 'accept: text/plain'
+
+curl -X 'POST' \
+  'https://localhost:44303/prescription-add' \
+  -H 'accept: */*' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "dateOfIssue": "15.01.2020",
+  "doctorName": "Janusz",
+  "doctorSurname": "Nowak",
+  "drugs": [
+    "apap"
+  ],
+  "expirationDate": "30.01.2020",
+  "patientName": "Norbert",
+  "patientSurname": "Kowalski"
+}'

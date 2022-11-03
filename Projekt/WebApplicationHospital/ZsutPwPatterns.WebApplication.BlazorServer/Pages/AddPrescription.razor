@@ -1,0 +1,56 @@
+﻿@page "/assignprescription"
+@inject IController controller
+@inject IModel model
+@using ZsutPwPatterns.Application.Model.Data
+@using System.Text
+@using System.Linq
+<style>
+    body {
+        background-color: lightsteelblue;
+    }
+</style>
+
+
+<h2>Assign Prescription</h2>
+<div class="row">
+    <div class="col-xl-6">
+
+
+        <h3 style="margin-top: 2rem">Date Of Issue</h3>
+        <RadzenTextBox @bind-Value=@model.AssignedPrescriptionData.dateOfIssue />
+        <h3 style="margin-top: 2rem">Doctor Name</h3>
+        <RadzenTextBox @bind-Value=@model.AssignedPrescriptionData.doctorName />
+        <h3 style="margin-top: 2rem">Doctor Surname</h3>
+        <RadzenTextBox @bind-Value=@model.AssignedPrescriptionData.doctorSurname />
+        <h3 style="margin-top: 2rem">Drugs</h3>
+        <RadzenTextBox @bind-Value=@model.AssignedPrescriptionData.drugs />
+        <h3 style="margin-top: 2rem">Expiration Date</h3>
+        <RadzenTextBox @bind-Value=@model.AssignedPrescriptionData.expirationDate />
+        <h3 style="margin-top: 2rem">Patient Name</h3>
+        <RadzenTextBox @bind-Value=@model.AssignedPrescriptionData.patientName />
+        <h3 style="margin-top: 2rem">Patinet Surname</h3>
+        <RadzenTextBox @bind-Value=@model.AssignedPrescriptionData.patientSurname />
+        <h3 style="margin-top: 2rem"></h3>
+        <RadzenButton Icon="add" Text="Assign Prescription" Click=@controller.AddPrescriptionAsync ButtonStyle="ButtonStyle.Secondary " Style="width: 250px" />
+
+    </div>
+
+</div>
+
+
+
+
+
+@code {
+    private IController controller_ = ControllerFactory.GetController(new EventDispatcher());
+
+    protected override async Task OnInitializedAsync()
+    {
+        IModel model1 = controller_.Model;
+
+        IModel model2 = controller.Model;
+
+        IModel model3 = model;
+    }
+}
+

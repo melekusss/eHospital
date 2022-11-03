@@ -1,0 +1,37 @@
+BEGIN TRANSACTION;
+GO
+
+CREATE TABLE [Specialization] (
+    [Id] int NOT NULL IDENTITY,
+    [Type] int NOT NULL,
+    CONSTRAINT [PK_Specialization] PRIMARY KEY ([Id])
+);
+GO
+
+CREATE TABLE [Doctor] (
+    [Id] int NOT NULL IDENTITY,
+    [Salary] int NULL,
+	[MainSpecialization] nvarchar(max) NULL,
+	[YearsOfWork] int NULL,
+	[Name] nvarchar(max) NULL,
+	[Surname] nvarchar(max) NULL,
+	[Age] int NULL,
+    CONSTRAINT [PK_Doctor] PRIMARY KEY ([Id])
+);
+GO
+
+CREATE TABLE [DoctorSpecialization] (
+    [SpecializationId] int NOT NULL,
+    [DoctorId] int NOT NULL,
+    CONSTRAINT [PK_DoctorSpecialization] PRIMARY KEY ([SpecializationId], [DoctorId]),
+    CONSTRAINT [FK_DoctorSpecialization_Specialization_SpecializationId] FOREIGN KEY ([SpecializationId]) REFERENCES [Specialization] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_DoctorSpecialization_Doctor_DoctorId] FOREIGN KEY ([DoctorId]) REFERENCES [Doctor] ([Id]) ON DELETE CASCADE
+);
+GO
+
+CREATE INDEX [IX_DoctorSpecialization_DoctorId] ON [DoctorSpecialization] ([DoctorId]);
+GO
+
+
+COMMIT;
+GO

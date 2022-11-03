@@ -1,0 +1,36 @@
+﻿@page "/selection"
+@inject IController controller
+@inject IModel model
+
+<h5>Click search to see doctor room selection</h5>
+<style>
+    body {
+        background-color: lightsteelblue;
+    }
+</style>
+
+
+<RadzenButton Icon="search" Text="Search" Click=@controller.ShowSelectionListAsync ButtonStyle="ButtonStyle.Secondary " Style="        width: 160px; margin-left: 80px ;
+" />
+
+<h5 style="margin-top: 16px">Selections:</h5>
+
+<RadzenListBox Name="selectionList" Data=@model.SelectionList TValue="DoctorRoomData" SelectedItem=@model.SelectedDoctorRoomData Style="width: 324px; height: 240px">
+    <Template Context="doctorRoomData">
+        @doctorRoomData.Name in @doctorRoomData.Number
+    </Template>
+</RadzenListBox>
+
+
+@code {
+    private IController controller_ = ControllerFactory.GetController(new EventDispatcher());
+
+    protected override async Task OnInitializedAsync()
+    {
+        IModel model1 = controller_.Model;
+
+        IModel model2 = controller.Model;
+
+        IModel model3 = model;
+    }
+}
