@@ -1,1 +1,1 @@
-Projekt aplikacji zarządzającej szpitalem. Aplikacja składa sie z mikrousług a dokładniej: mikrousługi danych, mikrousługi aplikacyjnej oraz aplikacji klienckiej
+Project of a hospital management application. The application consists of microservices, specifically: data microservice, application microservice, and client application.
